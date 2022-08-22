@@ -8,7 +8,7 @@
         public int Duration { get; set; }
 
         /// <summary>
-        /// Defines cache is local In-Memory cache or distributed
+        /// Defines cache is a local In-Memory cache or distributed
         /// </summary>
         public bool IsLocal { get; set; } = true;
 

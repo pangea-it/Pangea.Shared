@@ -5,7 +5,7 @@
         public long Id { get; set; }
 
         /// <summary>
-        /// Expiration in minute
+        /// Expiration in minutes
         /// </summary>
         public int Expires { get; set; }
     }
