@@ -162,5 +162,21 @@ namespace Pangea.Shared.Extensions.General
 
             return input;
         }
+
+        public static bool Is<T>(this object item) where T : class
+        {
+            ArgumentNullException.ThrowIfNull(item);
+
+            return item is T;
+        }
+
+        public static bool IsNot<T> (this object item) where T: class
+        {
+            ArgumentNullException.ThrowIfNull(item);
+
+            return item is not T;
+        }
+
+
     }
 }

@@ -42,10 +42,15 @@ namespace Pangea.Shared.DataAccess
         {
             return await _context.Set<TEntity>().ToListAsync(cancellationToken);
         }
-
+     
         public IEnumerable<TEntity> Find(Expression<Func<TEntity, bool>> predicate)
         {
             return _context.Set<TEntity>().Where(predicate);
+        }
+
+        public async Task<IEnumerable<TEntity>> FindAsync(Expression<Func<TEntity,bool>> predicate)
+        {
+            return await _context.Set<TEntity>().Where(predicate).ToListAsync();
         }
 
         public void Add(TEntity entity)
