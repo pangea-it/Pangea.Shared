@@ -30,7 +30,7 @@ namespace Pangea.Shared.DataAccess
 
         public async Task<TEntity> GetAsync<TKey>(TKey id, CancellationToken cancellationToken) where TKey : struct
         {
-            return (await _context.Set<TEntity>().FindAsync(new [] { id}, cancellationToken))!;
+            return (await _context.Set<TEntity>().FindAsync(id))!;
         }
 
         public IEnumerable<TEntity> GetAll()
