@@ -39,13 +39,13 @@ namespace Pangea.Shared.Attributes.Readers
 
         private static IEnumerable<T> GetAssemblyCustumAttributes<T>(Assembly assembly) where T : Attribute
         {
-            var titis = assembly.GetTypes()
+            var attributes = assembly.GetTypes()
                 .Where(type => typeof(ControllerBase).IsAssignableFrom(type))
                 .SelectMany(type => type.GetMethods())
                 .Where(m => m.GetCustomAttributes(typeof(T), true).Any())
                 .Select(x => x.GetCustomAttribute(typeof(T)))
                 .Select(y => (T)y);
-            return titis;
+            return attributes;
         }
     }
 }
