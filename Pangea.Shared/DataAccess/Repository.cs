@@ -23,34 +23,29 @@ namespace Pangea.Shared.DataAccess
 
         #region Methods
 
-        public TEntity Get<TKey>(TKey id) where TKey : struct
+        public virtual TEntity Get<TKey>(TKey id) where TKey : struct
         {
             return _context.Set<TEntity>().Find(id)!;
         }
 
-        public async Task<TEntity> GetAsync<TKey>(TKey id, CancellationToken cancellationToken) where TKey : struct
+        public virtual async Task<TEntity> GetAsync<TKey>(TKey id, CancellationToken cancellationToken) where TKey : struct
         {
             return (await _context.Set<TEntity>().FindAsync(id))!;
         }
 
-        public IEnumerable<TEntity> GetAll()
+        public virtual IEnumerable<TEntity> GetAll()
         {
             return _context.Set<TEntity>().ToList();
         }
 
-        public async Task<IEnumerable<TEntity>> GetAllAsync(CancellationToken cancellationToken)
+        public virtual async Task<IEnumerable<TEntity>> GetAllAsync(CancellationToken cancellationToken)
         {
             return await _context.Set<TEntity>().ToListAsync(cancellationToken);
         }
-     
+
         public IEnumerable<TEntity> Find(Expression<Func<TEntity, bool>> predicate)
         {
             return _context.Set<TEntity>().Where(predicate);
-        }
-
-        public async Task<IEnumerable<TEntity>> FindAsync(Expression<Func<TEntity,bool>> predicate)
-        {
-            return await _context.Set<TEntity>().Where(predicate).ToListAsync();
         }
 
         public void Add(TEntity entity)
