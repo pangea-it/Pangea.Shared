@@ -6,14 +6,8 @@ namespace Pangea.Shared.Attributes.Readers
 {
     public static class ClaimAttributeReader
     {
-
-
-
         public static IEnumerable<(string group, string claim, string description)> GetDescriptionAttributes(params Assembly[] list)
         {
-
-
-
             var listOfAttributes = new List<(string, string, string)>();
             foreach (var item in list)
             {
@@ -24,12 +18,10 @@ namespace Pangea.Shared.Attributes.Readers
                 foreach (var item2 in methods)
                 {
                     var attr = item2.GetCustomAttribute<DescriptionAttribute>();
-                    var group = item2.DeclaringType.Name;
+                    var group = item2.DeclaringType.Name.Replace("Controller", "");
                     var claim = $"{group}/{item2.Name}";
                     listOfAttributes.Add((group, claim, attr.Description));
                 }
-
-
             }
             return listOfAttributes;
         }
