@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using System.ComponentModel;
+using Pangea.Shared.Attributes.Claims;
 using System.Reflection;
 
 namespace Pangea.Shared.Attributes.Readers
