@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.DependencyInjection;
 using Pangea.Shared.Attributes.Authorization.Contracts;
@@ -11,6 +12,17 @@ namespace Pangea.Shared.Attributes.Authorization
     {
         public async Task OnAuthorizationAsync(AuthorizationFilterContext context)
         {
+
+            if(context == null)
+            {
+                throw new ArgumentNullException(nameof(context));
+            }
+
+            if(context.ActionDescriptor.EndpointMetadata.Any(x=>x is IAllowAnonymous))
+            {
+                return;
+            }
+
             string? securityStamp = context.HttpContext.User.FindFirst("SecurityStamp")?.Value;
             string? username = context.HttpContext.User.FindFirst(ClaimTypes.Name)?.Value;
             string? userId = context.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
