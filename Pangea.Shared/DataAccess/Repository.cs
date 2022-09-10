@@ -23,6 +23,8 @@ namespace Pangea.Shared.DataAccess
 
         #region Methods
 
+        public IQueryable<TEntity> All() => _context.Set<TEntity>();
+
         public virtual TEntity Get<TKey>(TKey id) where TKey : struct
         {
             return _context.Set<TEntity>().Find(id)!;

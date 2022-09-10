@@ -4,6 +4,7 @@ namespace Pangea.Shared.DataAccess.Contracts
 {
     public interface IRepository<TEntity> where TEntity : class
     {
+        IQueryable<TEntity> All();
         TEntity Get<TKey>(TKey id) where TKey : struct;
         Task<TEntity> GetAsync<TKey>(TKey id, CancellationToken cancellationToken) where TKey : struct;
         IEnumerable<TEntity> GetAll();
