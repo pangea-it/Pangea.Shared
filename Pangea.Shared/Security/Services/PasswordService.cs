@@ -4,7 +4,7 @@ namespace Pangea.Shared.Security.Services
 {
     public class PasswordService
     {
-        public static string GenerateRandomPassword(PasswordStrengthOptions? opts = null)
+        public string GenerateRandomPassword(PasswordStrengthOptions? opts = null)
         {
             opts ??= new PasswordStrengthOptions
             {
