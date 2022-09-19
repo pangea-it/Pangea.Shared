@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Pangea.Shared.Exceptions;
 using Pangea.Shared.Extensions.General;
 using System.ComponentModel.DataAnnotations;
 using System.Diagnostics;
@@ -22,8 +23,8 @@ namespace Pangea.Shared.Middlewares
 
         public GlobalExceptionHandler
         (
-            RequestDelegate next, 
-            ILogger<GlobalExceptionHandler> logger, 
+            RequestDelegate next,
+            ILogger<GlobalExceptionHandler> logger,
             ILoggerFactory loggerFactory
         )
         {
@@ -62,20 +63,39 @@ namespace Pangea.Shared.Middlewares
         private static Task HandleExceptionAsync(HttpContext context, Exception exception)
         {
             context.Response.ContentType = "application/json";
-            context.Response.StatusCode = (int)(exception is ValidationException
-                ? HttpStatusCode.BadRequest
-                : HttpStatusCode.InternalServerError);
 
-            return context.Response.WriteAsync
-            (
-                new
+            ErrorModel response = exception switch
+            {
+                ValidationException => new ErrorModel
                 {
-                    context.Response.StatusCode,
-                    exception.Message
-                }.ToJson()
-            );
+                    Message = exception.Message,
+                    StatusCode = (int)HttpStatusCode.BadRequest,
+                },
+
+                ResourceNotFoundException => new ErrorModel
+                {
+                    Message= exception.Message,
+                    StatusCode = (int)HttpStatusCode.NotFound,
+                },
+                
+                _ => new ErrorModel
+                {
+                    Message = "Something Unexpected occured",
+                    StatusCode = (int)HttpStatusCode.InternalServerError,
+                },
+            };
+
+            context.Response.StatusCode = response.StatusCode;
+
+            return context.Response.WriteAsync(response.ToJson());
         }
 
         #endregion
+    }
+
+    internal class ErrorModel
+    {
+        public int StatusCode { get; set; }
+        public string Message { get; set; } = string.Empty;
     }
 }
