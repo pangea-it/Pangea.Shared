@@ -11,12 +11,12 @@ namespace Pangea.Shared.Attributes.Authorization
     {
         public async Task OnAuthorizationAsync(AuthorizationFilterContext context)
         {
-            if(context == null)
+            if (context == null)
             {
                 throw new ArgumentNullException(nameof(context));
             }
 
-            if(context.ActionDescriptor.EndpointMetadata.Any(x=>x is IAllowAnonymous))
+            if (context.ActionDescriptor.EndpointMetadata.Any(x => x is IAllowAnonymous))
             {
                 return;
             }
@@ -26,14 +26,13 @@ namespace Pangea.Shared.Attributes.Authorization
             if (!userInfo.IsUserAuthenticated())
             {
                 context.Result = new UnauthorizedResult();
-                return; 
+                return;
             }
 
             var controller = context.RouteData.Values["controller"].ToString();
             var action = context.RouteData.Values["action"].ToString();
 
             string claim = string.Join('/', controller, action);
-
 
             if (!userInfo.HasClaim(claim))
             {

@@ -10,16 +10,19 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Extensions\DependencyInjection\**" />
+    <EmbeddedResource Remove="Extensions\DependencyInjection\**" />
+    <None Remove="Extensions\DependencyInjection\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Core" Version="2.2.5" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.8" />
 	<PackageReference Include="Microsoft.AspNetCore" Version="2.2.0" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
 	<PackageReference Include="BCrypt.Net-Next" Version="4.0.3" />
     <PackageReference Include="StackExchange.Redis" Version="2.6.48" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Extensions\DependencyInjection\" />
+    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.23.1" />
   </ItemGroup>
 
 </Project>
