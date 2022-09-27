@@ -16,7 +16,7 @@ namespace Pangea.Shared.Extensions.General
         public static int ExtractUserId(this string jwtToken)
         {
             var token = GetDecodedToken(jwtToken);
-            var userid = token?.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Sid || c.Type == "sub")?.Value;
+            var userid = token?.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
 
             return Convert.ToInt32(userid);
         }
