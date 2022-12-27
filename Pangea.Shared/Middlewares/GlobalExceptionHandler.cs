@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Microsoft.IdentityModel.Tokens;
 using Pangea.Shared.Exceptions;
 using Pangea.Shared.Extensions.General;
 using System.ComponentModel.DataAnnotations;
@@ -72,12 +73,18 @@ namespace Pangea.Shared.Middlewares
                     StatusCode = (int)HttpStatusCode.BadRequest,
                 },
 
+                SecurityTokenValidationException => new ErrorModel
+                {
+                    Message = "Invalid token",
+                    StatusCode=(int)HttpStatusCode.BadRequest,
+                },
+
                 ResourceNotFoundException => new ErrorModel
                 {
-                    Message= exception.Message,
+                    Message = exception.Message,
                     StatusCode = (int)HttpStatusCode.NotFound,
                 },
-                
+
                 _ => new ErrorModel
                 {
                     Message = "Something Unexpected occured",
